@@ -46,6 +46,7 @@ void userhook_SlowLoop()
 #ifdef USERHOOK_SUPERSLOWLOOP
 void userhook_SuperSlowLoop()
 {
+	/*
 	// put your 1Hz code here
 	//hal.console->println_P(PSTR("I am and winrar"));
 	//gcs_send_text_P(SEVERITY_LOW, PSTR("MAVlink winrar"));
@@ -82,6 +83,14 @@ void userhook_SuperSlowLoop()
 			//}
 		}
 		i2c_sem->give();
+	}*/
+	//AP_Pixy pixy = getPixy();
+	//bool huehuehue = pixy.readPixyData();
+	if(pixy.blockAvailable==true){
+		gcs_send_text_fmt(PSTR("S:%d X:%d Y:%d W:%d H:%d"),pixy.signature,pixy.x,pixy.y,pixy.w,pixy.h);
+	}else{
+		gcs_send_text_fmt(PSTR("Pixy error: %d"),pixy.pixyError);
 	}
+	//barometer.read();
 }
 #endif

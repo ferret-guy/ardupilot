@@ -106,6 +106,7 @@
 #include <AP_ADC.h>             // ArduPilot Mega Analog to Digital Converter Library
 #include <AP_ADC_AnalogSource.h>
 #include <AP_Baro.h>
+#include <AP_Pixy.h>
 #include <AP_Compass.h>         // ArduPilot Mega Magnetometer Library
 #include <AP_Math.h>            // ArduPilot Mega Vector/Matrix math Library
 #include <AP_Curve.h>           // Curve used to linearlise throttle pwm to thrust
@@ -308,12 +309,24 @@ static AP_Compass_HMC5843 compass;
  #endif
  #endif
 
+// hacky pixy initialization
+static AP_Pixy pixy;
+
+//TURN BACK, EXTREME HACK AHEAD
+AP_Pixy getPixy(){return pixy;}
+
 #elif HIL_MODE != HIL_MODE_DISABLED
 // sensor emulators
 static AP_ADC_HIL              adc;
 static AP_Baro_HIL      barometer;
 static AP_Compass_HIL          compass;
 static AP_InertialSensor_HIL   ins;
+
+// hacky pixy initialization
+static AP_Pixy pixy;
+
+//TURN BACK, EXTREME HACK AHEAD
+AP_Pixy getPixy(){return pixy;}
 
  #if CONFIG_HAL_BOARD == HAL_BOARD_AVR_SITL
  // When building for SITL we use the HIL barometer and compass drivers
@@ -1043,6 +1056,10 @@ static void update_batt_compass(void)
 {
     // read battery before compass because it may be used for motor interference compensation
     read_battery();
+	
+	// sorry
+	//AP_Pixy pixy = getPixy();
+	pixy.readPixyData();
 
     if(g.compass_enabled) {
         // update compass with throttle value - used for compassmot

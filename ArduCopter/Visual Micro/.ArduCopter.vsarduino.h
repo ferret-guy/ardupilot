@@ -18,6 +18,8 @@
 #define __cplusplus
 extern "C" void __cxa_pure_virtual() {;}
 
+AP_Pixy getPixy();
+AP_Pixy getPixy();
 //
 static void compass_accumulate(void);
 static void barometer_accumulate(void);

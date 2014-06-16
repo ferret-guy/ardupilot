@@ -28,15 +28,15 @@
     <BootSegment>0</BootSegment>
     <AsfFrameworkConfig>
       <framework-data>
-  <options />
-  <configurations />
-  <files />
-  <documentation help="" />
-  <offline-documentation help="" />
-  <dependencies>
-    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.6.0" />
-  </dependencies>
-</framework-data>
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.6.0" />
+        </dependencies>
+      </framework-data>
     </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -88,6 +88,8 @@
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_ADC_AnalogSource\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro\utility</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Math</Value>
@@ -228,6 +230,8 @@
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_ADC_AnalogSource\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro\utility</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Math</Value>
@@ -331,6 +335,11 @@
         </avrgcc.compiler.symbols.DefSymbols>
       </AvrGccCpp>
     </ToolchainSettings>
+    <VisualMicroSettings>
+      <VisualMicroSettings xmlns="">
+        <arduino.upload.port>COM8</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
@@ -381,6 +390,8 @@
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_ADC_AnalogSource\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro\utility</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Math</Value>
@@ -521,6 +532,8 @@
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_ADC_AnalogSource\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Baro\utility</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy</Value>
+            <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Pixy\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Compass\utility</Value>
             <Value>C:\Users\ExtraUser\Documents\GitHub\ardupilot\libraries\AP_Math</Value>
@@ -624,12 +637,167 @@
         </avrgcc.compiler.symbols.DefSymbols>
       </AvrGccCpp>
     </ToolchainSettings>
+    <VisualMicroSettings>
+      <VisualMicroSettings xmlns="">
+        <arduino.upload.port>COM8</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
   </PropertyGroup>
   <ItemGroup>
     <None Include="AP_State.pde">
       <SubType>compile</SubType>
     </None>
     <None Include="ArduCopter.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Attitude.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="commands.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="commands_logic.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="command_description.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="compassmot.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="compat.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_acro.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_althold.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_auto.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_autotune.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_circle.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_drift.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_flip.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_guided.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_hybrid.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_land.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_loiter.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_modes.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_ofloiter.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_rtl.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_sport.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="control_stabilize.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="crash_check.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="events.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="failsafe.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="fence.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="flight_mode.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="GCS_Mavlink.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="heli.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="heli_control_acro.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="heli_control_stabilize.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="inertia.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="leds.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Log.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Makefile">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="motors.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="motor_test.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="navigation.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="nocore.inoflag">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Parameters.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="perf_info.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="position_vector.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="radio.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="readme.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="ReleaseNotes.txt">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="sensors.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="setup.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="system.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="test.pde">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="UserCode.pde">
       <SubType>compile</SubType>
     </None>
   </ItemGroup>
@@ -641,6 +809,24 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="APM_Config_mavlink_hil.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="compat.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="config_channels.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="defines.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Parameters.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UserVariables.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Visual Micro\.ArduCopter.vsarduino.h">
