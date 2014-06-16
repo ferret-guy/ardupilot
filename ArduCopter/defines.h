@@ -13,6 +13,9 @@
 #define ENABLE ENABLED
 #define DISABLE DISABLED
 
+// userlope
+#define USERHOOK_SUPERSLOWLOOP
+
 // Flight modes
 // ------------
 #define AUTO_YAW_HOLD                   0       // pilot controls the heading
