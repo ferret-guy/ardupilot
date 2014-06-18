@@ -190,6 +190,7 @@ static void autotune_start();
 static void autotune_stop();
 static bool autotune_init(bool ignore_checks);
 static void autotune_run();
+static void pixy_yaw_control();
 static void autotune_attitude_control();
 static void autotune_failed();
 static void autotune_backup_gains_and_initialise();

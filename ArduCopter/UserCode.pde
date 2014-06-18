@@ -86,11 +86,25 @@ void userhook_SuperSlowLoop()
 	}*/
 	//AP_Pixy pixy = getPixy();
 	//bool huehuehue = pixy.readPixyData();
-	if(pixy.blockAvailable==true){
+	/*if(pixy.blockAvailable==true){
 		gcs_send_text_fmt(PSTR("S:%d X:%d Y:%d W:%d H:%d"),pixy.signature,pixy.x,pixy.y,pixy.w,pixy.h);
-	}else{
+		gcs_send_text_P(SEVERITY_MEDIUM,PSTR("Shit works, yo."));
+		if(pixy.x<PIXY_X_CENTER){
+			gcs_send_text_fmt(PSTR("Turning left %d points."),pixy.x_rel);
+		}else if(pixy.x>PIXY_X_CENTER){
+			gcs_send_text_fmt(PSTR("Turning right %d points."),pixy.x_rel);
+		}
+	}else if(pixy.pixyError!=PIXY_NO_ERROR){
 		gcs_send_text_fmt(PSTR("Pixy error: %d"),pixy.pixyError);
-	}
+		for(int i=1;i<=PIXY_WORDS;i++){
+			gcs_send_text_fmt(PSTR("Word %d is: %d"),i,pixy.p_words[i]);
+			delay(15);
+		}
+		for(int i=0;i<PIXY_BYTES;i++){
+			gcs_send_text_fmt(PSTR("Byte %d is: %d"),i,pixy.p_bytes[i]);
+			delay(15);
+		}
+	}*/
 	//barometer.read();
 }
 #endif

@@ -29,6 +29,9 @@
 #define PIXY_H_MAX 255
 #define PIXY_H_MIN 0
 
+#define PIXY_X_CENTER 160
+#define PIXY_Y_CENTER 100
+
 typedef struct {
 	uint16_t sig;
 	uint16_t x;
@@ -46,15 +49,23 @@ class AP_Pixy
 	int pixyError;
 	uint16_t signature;
 	uint16_t x;
+	int16_t x_rel;
+	uint16_t abs_x_rel;
 	uint16_t y;
+	int16_t y_rel;
+	uint16_t abs_y_rel;
 	uint16_t w;
 	uint16_t h;
+	uint8_t a_bytes[PIXY_BYTES+1];
+	uint16_t a_words[PIXY_WORDS+1];
+	uint8_t *p_bytes = a_bytes;
+	uint16_t *p_words = a_words;
 	private:
-	uint8_t p_bytes[PIXY_BYTES];
-	uint16_t p_words[PIXY_WORDS];
+	uint16_t newWord;
 	uint16_t checksum;
 	bool checkChecksum();
 	bool checkBounds();
+	bool checkZeros();
 	uint16_t assembleWord(uint8_t lowByte, uint8_t highByte);
-	uint16_t* bytesToWords(uint8_t* bytes);
+	bool bytesToWords(uint8_t* bytes, uint16_t* words);
 };

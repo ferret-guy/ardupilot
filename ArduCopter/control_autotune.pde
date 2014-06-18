@@ -269,13 +269,26 @@ static void autotune_run()
             attitude_control.angle_ef_roll_pitch_rate_ef_yaw_smooth(target_roll, target_pitch, target_yaw_rate, get_smoothing_gain());
         }else{
             // somehow get attitude requests from autotuning
-            autotune_attitude_control();
+            // autotune_attitude_control();
+			
+			// search and destroy red things
+			pixy_yaw_control();
         }
 
         // call position controller
         pos_control.set_alt_target_from_climb_rate(target_climb_rate, G_Dt);
         pos_control.update_z_controller();
     }
+}
+
+// CURRENT FUNCTION - Turn to face a recognized object.
+// PLANNED FUNCTION - Rapidly fly towards a red balloon.
+static void pixy_yaw_control(){
+	if(pixy.blockAvailable==true){
+		attitude_control.angle_ef_roll_pitch_rate_ef_yaw(0.0f,0.0f,(pixy.x_rel/1600));
+	}else{
+		attitude_control.angle_ef_roll_pitch_rate_ef_yaw(0.0f,0.0f,0.0f);
+	}
 }
 
 // autotune_attitude_controller - sets attitude control targets during tuning
