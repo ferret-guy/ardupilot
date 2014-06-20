@@ -1120,7 +1120,7 @@ static void three_hz_loop()
 {
     // check if we've lost contact with the ground station
     failsafe_gcs_check();
-	//pixy.readPixyData();
+	pixy.readPixyData();
 
 #if AC_FENCE == ENABLED
     // check if we have breached a fence
@@ -1140,7 +1140,7 @@ static void three_hz_loop()
 // one_hz_loop - runs at 1Hz
 static void one_hz_loop()
 {
-	pixy.readPixyData();
+	//pixy.readPixyData();
     if (g.log_bitmask != 0) {
         Log_Write_Data(DATA_AP_STATE, ap.value);
     }

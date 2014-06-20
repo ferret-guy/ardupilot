@@ -198,6 +198,8 @@ static bool autotune_init(bool ignore_checks)
 
     // initialise altitude target to stopping point
     pos_control.set_target_to_stopping_point_z();
+	
+	althold_init( false);
 
     return true;
 }
@@ -267,6 +269,9 @@ static void autotune_run()
         // if pilot override call attitude controller
         if (autotune_state.pilot_override || autotune_state.mode != AUTOTUNE_MODE_TUNING) {
             attitude_control.angle_ef_roll_pitch_rate_ef_yaw_smooth(target_roll, target_pitch, target_yaw_rate, get_smoothing_gain());
+			target_climb_rate += 4;
+			pos_control.set_alt_target_from_climb_rate(target_climb_rate, G_Dt);
+			pos_control.update_z_controller();
         }else{
             // somehow get attitude requests from autotuning
             // autotune_attitude_control();
@@ -274,21 +279,37 @@ static void autotune_run()
 			// search and destroy red things
 			pixy_yaw_control();
         }
-
+		
         // call position controller
-        pos_control.set_alt_target_from_climb_rate(target_climb_rate, G_Dt);
-        pos_control.update_z_controller();
+        //pos_control.set_alt_target_from_climb_rate(target_climb_rate, G_Dt);
+        //pos_control.update_z_controller();
     }
 }
 
 // CURRENT FUNCTION - Turn to face a recognized object.
 // PLANNED FUNCTION - Rapidly fly towards a red balloon.
 static void pixy_yaw_control(){
+	float target_climb_rate;
 	if(pixy.blockAvailable==true){
-		attitude_control.angle_ef_roll_pitch_rate_ef_yaw(0.0f,0.0f,(pixy.x_rel/1600));
+		float tpitch = 0.0f;
+		if(pixy.w>45){
+			tpitch = -500.0f; 
+		}else if(pixy.w<=45 && pixy.w>=25){
+			uint16_t crel = 35 - pixy.w;
+			tpitch = crel * 50;
+		}else if(pixy.w<25){
+			tpitch = 500.0f;
+		}
+		attitude_control.angle_ef_roll_pitch_rate_ef_yaw_smooth(0.0f,tpitch,(pixy.x_rel*25),get_smoothing_gain());
+		target_climb_rate = pixy.y_rel*-2.5;
 	}else{
 		attitude_control.angle_ef_roll_pitch_rate_ef_yaw(0.0f,0.0f,0.0f);
+		target_climb_rate = 0;
 	}
+	target_climb_rate += 1;
+	// call position controller
+	pos_control.set_alt_target_from_climb_rate(target_climb_rate, G_Dt);
+	pos_control.update_z_controller();
 }
 
 // autotune_attitude_controller - sets attitude control targets during tuning
