@@ -1059,7 +1059,7 @@ static void update_batt_compass(void)
 	
 	// sorry
 	//AP_Pixy pixy = getPixy();
-	//pixy.readPixyData();
+	pixy.readPixyData();
 
     if(g.compass_enabled) {
         // update compass with throttle value - used for compassmot
@@ -1120,7 +1120,7 @@ static void three_hz_loop()
 {
     // check if we've lost contact with the ground station
     failsafe_gcs_check();
-	pixy.readPixyData();
+	//pixy.readPixyData();
 
 #if AC_FENCE == ENABLED
     // check if we have breached a fence

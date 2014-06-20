@@ -115,6 +115,9 @@ static float    orig_pitch_rp = 0, orig_pitch_ri, orig_pitch_rd, orig_pitch_sp; 
 static float    tune_roll_rp, tune_roll_rd, tune_roll_sp;                   // currently being tuned parameter values
 static float    tune_pitch_rp, tune_pitch_rd, tune_pitch_sp;                // currently being tuned parameter values
 
+uint16_t prev_w;
+bool running;
+
 // autotune_start - should be called when the ch7/ch8 switch is switched ON
 static void autotune_start()
 {
@@ -200,7 +203,9 @@ static bool autotune_init(bool ignore_checks)
     pos_control.set_target_to_stopping_point_z();
 	
 	althold_init( false);
-
+	
+	running = true;
+	
     return true;
 }
 
@@ -286,12 +291,12 @@ static void autotune_run()
     }
 }
 
-// CURRENT FUNCTION - Turn to face a recognized object.
+// CURRENT FUNCTION - Turn to face and become level with a recognized object.
 // PLANNED FUNCTION - Rapidly fly towards a red balloon.
 static void pixy_yaw_control(){
 	float target_climb_rate;
 	if(pixy.blockAvailable==true){
-		float tpitch = 0.0f;
+		/*float tpitch = 0.0f;
 		if(pixy.w>45){
 			tpitch = -500.0f; 
 		}else if(pixy.w<=45 && pixy.w>=25){
@@ -299,11 +304,38 @@ static void pixy_yaw_control(){
 			tpitch = crel * 50;
 		}else if(pixy.w<25){
 			tpitch = 500.0f;
+		}*/
+		Vector3f bt_vel_cms, et_vel_cms;
+		bt_vel_cms.x = 0.0f;
+		bt_vel_cms.z = 0.0f;
+		if(pixy.x_rel>-10 && pixy.x_rel<10){
+			bt_vel_cms.y= 100.0f;
+		}else{
+			bt_vel_cms.y= 0.0f;
 		}
-		attitude_control.angle_ef_roll_pitch_rate_ef_yaw_smooth(0.0f,tpitch,(pixy.x_rel*25),get_smoothing_gain());
+		attitude_control.frame_conversion_bf_to_ef(bt_vel_cms,et_vel_cms);
+		pos_control.set_desired_velocity(et_vel_cms.x,et_vel_cms.y);
+		Vector3f p_angles;
+		p_angles = attitude_control.angle_ef_targets();
+		attitude_control.angle_ef_roll_pitch_rate_ef_yaw_smooth(p_angles.x,p_angles.y,(pixy.x_rel*25),get_smoothing_gain());
 		target_climb_rate = pixy.y_rel*-2.5;
+		if((pixy.w*100)<prev_w){
+			running = false;
+		}
+		prev_w = pixy.w;
+	}else if(running){
+		pos_control.set_desired_velocity(0.0f,0.0f);
+		//attitude_control.angle_ef_roll_pitch_rate_ef_yaw(0.0f,0.0f,0.0f);
+		Vector3f p_angles;
+		p_angles = attitude_control.angle_ef_targets();
+		attitude_control.angle_ef_roll_pitch_rate_ef_yaw_smooth(p_angles.x,p_angles.y,30.0f,get_smoothing_gain());
+		target_climb_rate = 0;
 	}else{
-		attitude_control.angle_ef_roll_pitch_rate_ef_yaw(0.0f,0.0f,0.0f);
+		pos_control.set_desired_velocity(0.0f,0.0f);
+		//attitude_control.angle_ef_roll_pitch_rate_ef_yaw(0.0f,0.0f,0.0f);
+		Vector3f p_angles;
+		p_angles = attitude_control.angle_ef_targets();
+		attitude_control.angle_ef_roll_pitch_rate_ef_yaw_smooth(p_angles.x,p_angles.y,0.0f,get_smoothing_gain());
 		target_climb_rate = 0;
 	}
 	target_climb_rate += 1;
